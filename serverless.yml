@@ -1,0 +1,132 @@
+service: node-sls-indra-test
+frameworkVersion: "3"
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  environment:
+    PLANET_TABLE: planet
+  stage: dev
+  httpApi:
+    cors: true
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+          Resource: "arn:aws:dynamodb:${aws:region}:*:table/${self:provider.environment.PLANET_TABLE}"
+
+plugins:
+  - serverless-dynamodb
+  - serverless-offline
+
+package:
+  individually: true
+  patterns:
+    - "!src/**"
+    - "!.dynamodb/**"
+    - "!node_modules/**"
+    - "!layer/**"
+    - "!README.md"
+    - "!serverless.postman_collection.json"
+    - "!test/**"
+
+custom:
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+      seed: true
+    seed:
+      domain:
+        sources:
+          - table: ${self:provider.environment.PLANET_TABLE}
+            sources: [./src/seed/planet/planet-data.json]
+  serverless-offline:
+    httpPort: 3003
+
+resources:
+  Resources:
+    PlanetDynamoDbTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: ${self:provider.environment.PLANET_TABLE}
+        AttributeDefinitions:
+          - AttributeName: idplaneta
+            AttributeType: S
+        KeySchema:
+          - AttributeName: idplaneta
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+layers:
+  nodemodules:
+    path: ./layer
+    description: Node Modules dependencies as layer
+    compatibleRuntimes:
+      - nodejs18.x
+    allowedAccounts:
+      - "*"
+
+functions:
+  greet:
+    handler: src/greet/handler.greet
+    package:
+      patterns:
+        - "src/greet/handler.js"
+        - "src/utils/response.js"
+    events:
+      - httpApi:
+          path: /
+          method: get
+
+  find-planet:
+    handler: src/planet/00-find/handler.find
+    package:
+      patterns:
+        - "src/planet/00-find/handler.js"
+        - "src/utils/dynamodb.js"
+        - "src/utils/response.js"
+    layers:
+      - { Ref: NodemodulesLambdaLayer }
+    events:
+      - httpApi:
+          path: /planet/{idplaneta}
+          method: get
+  get-planet:
+    handler: src/planet/01-get/handler.get
+    package:
+      patterns:
+        - "src/planet/01-get/handler.js"
+        - "src/utils/dynamodb.js"
+        - "src/utils/response.js"
+    layers:
+      - { Ref: NodemodulesLambdaLayer }
+    events:
+      - httpApi:
+          path: /planet
+          method: get
+  save-planet:
+    handler: src/planet/02-save/handler.save
+    package:
+      patterns:
+        - "src/planet/02-save/handler.js"
+        - "src/service/fetch/fetchdata.js"
+        - "src/utils/dynamodb.js"
+        - "src/utils/response.js"
+    layers:
+      - { Ref: NodemodulesLambdaLayer }
+    events:
+      - httpApi:
+          path: /planet
+          method: POST

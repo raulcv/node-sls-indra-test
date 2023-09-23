@@ -1,0 +1,50 @@
+[
+	{
+		"idplaneta": "65d23d7a-ea0e-4e1f-a0d4-391d763389d0",
+		"id": 1,
+		"clima": "Arid",
+		"creado": "2014-12-09T13:50:49.641000Z",
+		"diametro": "10465",
+		"editado": "2014-12-15T13:48:16.167217Z",
+		"gravedad": "1",
+		"nombre": "Tatooine",
+		"periodo_orbital": "304",
+		"poblacion": "120000",
+		"residentes": [
+			"https://swapi.py4e.com/api/people/1/",
+			"https://swapi.py4e.com/api/people/2/"
+		],
+		"peliculas": [
+			"https://swapi.py4e.com/api/films/1/",
+			"https://swapi.py4e.com/api/films/3/"
+		],
+		"periodo_rotacion": "23",
+		"superficie_agua": "1",
+		"terreno": "Dessert",
+		"url": "https://swapi.py4e.com/api/planets/1/"
+	},
+	{
+		"idplaneta": "506fb5be-70cb-483a-ac66-e89d1a1ef56b",
+		"id": 2,
+		"nombre": "Alderaan",
+		"periodo_rotacion": "24",
+		"periodo_orbital": "364",
+		"diametro": "12500",
+		"clima": "temperate",
+		"gravedad": "1 standard",
+		"terreno": "grasslands, mountains",
+		"superficie_agua": "40",
+		"poblacion": "2000000000",
+		"residentes": [
+			"https://swapi.py4e.com/api/people/8/",
+			"https://swapi.py4e.com/api/people/9/"
+		],
+		"peliculas": [
+			"https://swapi.py4e.com/api/films/5/",
+			"https://swapi.py4e.com/api/films/6/"
+		],
+		"creado": "2014-12-10T11:35:48.479000Z",
+		"editado": "2014-12-20T20:58:18.420000Z",
+		"url": "https://swapi.py4e.com/api/planets/2/"
+	}
+]

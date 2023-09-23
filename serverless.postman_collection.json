@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "80a92044-ce77-4be8-89c2-3c8ea331d9fa",
+		"name": "serverless",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25931207"
+	},
+	"item": [
+		{
+			"name": "Node SLS INDRA test",
+			"item": [
+				{
+					"name": "get greet",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url-sls-indra-local}}",
+							"host": [
+								"{{url-sls-indra-local}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find planet by idplane",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url-sls-indra-local}}planet/{{idplaneta}}",
+							"host": [
+								"{{url-sls-indra-local}}planet"
+							],
+							"path": [
+								"{{idplaneta}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all planet",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url-sls-indra-local}}planet?nombre=a&terreno=a&limite=2&page=1",
+							"host": [
+								"{{url-sls-indra-local}}planet"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "a"
+								},
+								{
+									"key": "terreno",
+									"value": "a"
+								},
+								{
+									"key": "limite",
+									"value": "2"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save planet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idplaneta\": 1\n    // \"name\": \"Dantooine\", \n    // \"rotation_period\": \"25\", \n    // \"orbital_period\": \"378\", \n    // \"diameter\": \"9830\", \n    // \"climate\": \"temperate\", \n    // \"gravity\": \"1 standard\", \n    // \"terrain\": \"oceans, savannas, mountains, grasslands\", \n    // \"surface_water\": \"unknown\", \n    // \"population\": \"1000\", \n    // \"residents\": [], \n    // \"films\": [], \n    // \"url\": \"https://swapi.py4e.com/api/planets/25/\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url-sls-indra-public}}planet",
+							"host": [
+								"{{url-sls-indra-public}}planet"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url-sls-indra-local",
+			"value": "http://localhost:3003/",
+			"type": "string"
+		},
+		{
+			"key": "idplaneta",
+			"value": "506fb5be-70cb-483a-ac66-e89d1a1ef56b",
+			"type": "string"
+		},
+		{
+			"key": "url-sls-indra-public",
+			"value": "https://fhl4tc6ckk.execute-api.us-east-1.amazonaws.com/",
+			"type": "string"
+		}
+	]
+}
