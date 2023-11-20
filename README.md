@@ -84,6 +84,7 @@ the response will be similar to:
     }
 }
 ```
+Awesome Works!!! 😇😇😇
 
 
 Emulate API Gateway and Lambda locally using `serverless offline` plugin.
